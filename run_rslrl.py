@@ -91,9 +91,9 @@ def main():
     os.makedirs(log_dir, exist_ok=True)
     wandb.init(project='genesis', name=args.exp_name, dir=log_dir, mode='offline')
 
-    env = create_environment(args.task)(vis=args.vis, device=args.device, num_envs=args.num_envs)
+    env = create_environment(args.task)(vis=args.vis, device=args.device, num_envs=args.num_envs, max_episode_length=1500)
     # key
-    rslrl_adapter = RslrlAdapter(env, max_episode_length=999999999)
+    rslrl_adapter = RslrlAdapter(env)
     runner = OnPolicyRunner(rslrl_adapter, train_cfg, log_dir, device="cuda:0")
 
     pickle.dump(
@@ -102,7 +102,7 @@ def main():
     )
 
     runner.learn(
-        num_learning_iterations=args.max_iterations, init_at_random_ep_len=True
+        num_learning_iterations=args.max_iterations, init_at_random_ep_len=False
     )
 
 
