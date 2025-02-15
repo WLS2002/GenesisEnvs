@@ -5,7 +5,7 @@ from algo.ppo_agent import PPOAgent
 from env import *
 import os
 
-gs.init(backend=gs.gpu, precision="32")
+gs.init(backend=gs.gpu, precision="32", logging_level="error")
 
 task_to_class = {
     'GraspFixedBlock': GraspFixedBlockEnv,
